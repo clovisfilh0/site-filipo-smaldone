@@ -1,47 +1,70 @@
-/* Configurações Gerais da Página */
+/* ==========================================================================
+   1. VARIÁVEIS GLOBAIS (THEMING) & RESET DE ESTRUTURA
+   ========================================================================== */
+:root {
+    --cor-primaria: #0056b3;
+    --cor-primaria-hover: #004085;
+    --cor-secundaria: #ff4757;
+    --cor-secundaria-hover: #ff2e44;
+    --cor-texto: #333333;
+    --cor-texto-suave: #666666;
+    --cor-fundo-corpo: #ffffff;
+    --cor-fundo-card: #ffffff;
+    --cor-fundo-alternativo: #f4f9ff;
+    --cor-borda: #dddddd;
+    --cor-sucesso: #38ef7d;
+}
+
 body {
     font-size: 16px;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color: #333;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo-corpo);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Barra de Acessibilidade */
-.barra-acessibilidade {
-    background: #222;
-    padding: 10px;
-    text-align: right;
+.escondido {
+    display: none !important;
 }
 
-#btn-acessibilidade {
-    padding: 5px 10px;
-    cursor: pointer;
-    background: #fff;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
+/* ANIMAÇÃO MODERNIZADA SCROLL REVEAL */
+.revelar {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Cabeçalho Fixo (Menu) */
+.revelar.ativo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   2. LAYOUT DO CABEÇALHO FIXO & EFETIO DE VIDRO FOSCO (GLASSMORPHISM)
+   ========================================================================== */
 #cabecalho-fixo {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     padding: 15px 40px;
+    transition: all 0.3s ease;
 }
 
 .logo img {
-    height: 65px;      /* Altura ideal para uma barra de navegação fixa */
-    width: auto;       /* Mantém a proporção correta do desenho sem achatar */
+    height: 65px;
+    width: auto;
     display: block;
 }
 
@@ -51,23 +74,81 @@ body {
     align-items: center;
 }
 
-/* Espaçador para o conteúdo não sumir debaixo do menu fixo */
 .espacador-menu {
     height: 80px;
 }
 
-/* Conteúdo Principal (Landing Page) */
+/* ==========================================================================
+   3. COMPONENTES INTERATIVOS (BOTÕES E ÍCONES)
+   ========================================================================== */
+.botao-menu {
+    text-decoration: none;
+    color: #444444;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-menu:hover {
+    background-color: #f0f5ff;
+    color: var(--cor-primaria);
+}
+
+.btn-menu-doacao {
+    background-color: var(--cor-secundaria);
+    color: white !important;
+    font-weight: bold;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-menu-doacao:hover {
+    background-color: var(--cor-secundaria-hover);
+    transform: scale(1.05);
+}
+
+.btn-icone {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background 0.2s, opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.65;
+}
+
+.btn-icone:hover {
+    background-color: #f0f5ff;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   4. CONTEÚDO E ESTRUTURA DAS SEÇÕES (LANDING PAGE)
+   ========================================================================== */
 .conteudo-principal {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Seção Banner Principal (Hero) */
 #hero {
     text-align: center;
     padding: 60px 20px;
-    background: #f4f9ff;
+    background: var(--cor-fundo-alternativo);
     border-radius: 8px;
     margin-bottom: 30px;
 }
@@ -75,23 +156,22 @@ body {
 #hero h1 {
     font-size: 36px;
     margin-bottom: 20px;
-    color: #111;
+    color: #111111;
 }
 
 #hero p {
     font-size: 18px;
-    color: #666;
+    color: var(--cor-texto-suave);
     max-width: 600px;
     margin: 0 auto 30px auto;
 }
 
-/* Seção dos Núcleos de Atendimento */
 .secao-nucleos {
     margin-bottom: 50px;
 }
 
 .secao-nucleos h2 {
-    border-bottom: 2px solid #0056b3;
+    border-bottom: 2px solid var(--cor-primaria);
     padding-bottom: 10px;
 }
 
@@ -102,190 +182,34 @@ body {
     margin-top: 20px;
 }
 
+/* CARDS MODERNOS COM FLUTUAÇÃO 3D */
 .card-nucleo {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 12px;
+    background-color: var(--cor-fundo-card);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Rodapé */
-.rodape-institucional {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 30px;
-    margin-top: 50px;
+.card-nucleo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    border-color: var(--cor-primaria);
 }
 
-.rodape-institucional p {
-    margin: 5px 0;
-}
-
-.texto-endereco {
-    font-size: 14px;
-    color: #ccc;
-}
-
-/* Estilo dos Botões de Navegação do Topo */
-.botao-menu {
-    text-decoration: none;
-    color: #444;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease; /* Transição suave de cor */
-}
-
-/* Efeito Hover (Quando o mouse passa por cima) */
-.botao-menu:hover {
-    background-color: #f0f5ff;
-    color: #0056b3;
-}
-
-/* Estilo do Botão de Acessibilidade (🔍) dentro do menu */
-#btn-acessibilidade {
-    padding: 8px 12px;
-    cursor: pointer;
-    background: #0056b3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-
-#btn-acessibilidade:hover {
-    background: #004085;
-}
-
-/* Estilo dos botões de ícones rápidos do menu */
-/* 1. Ajuste no Container do Menu para alinhar os blocos */
-#menu-navegacao {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-/* 2. Nova regra para diminuir e suavizar os ícones de utilitários */
-.btn-icone {
-    background: transparent;
-    border: none;
-    font-size: 13px; /* Reduzido de 18px para 13px (ficam bem mais discretos) */
-    cursor: pointer;
-    padding: 6px;    /* Menos espaçamento interno para diminuir o botão */
-    border-radius: 50%;
-    transition: background 0.2s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.65;   /* Deixa eles levemente "transparentes" para perderem o destaque visual */
-}
-
-/* Efeito Hover nos ícones */
-.btn-icone:hover {
-    background-color: #f0f5ff;
-    opacity: 1; /* Quando o usuário passa o mouse, ele ganha cor total */
-}
-
-/* Ajuste do Hover dos ícones no Modo Noturno */
-body.dark-mode .btn-icone:hover {
-    background-color: #2a2a2a;
-}
-
-.btn-icone:hover {
-    background-color: #f0f5ff;
-}
-
-/* ==========================================
-   ESTILOS DO MODO NOTURNO (DARK MODE)
-   ========================================== */
-body.dark-mode {
-    background-color: #121212;
-    color: #f5f5f5;
-}
-
-body.dark-mode #cabecalho-fixo {
-    background-color: #1e1e1e;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-body.dark-mode .botao-menu {
-    color: #ccc;
-}
-
-body.dark-mode .botao-menu:hover {
-    background-color: #2a2a2a;
-    color: #38ef7d; /* Um verde moderno para destacar no escuro */
-}
-
-body.dark-mode .btn-icone:hover {
-    background-color: #2a2a2a;
-}
-
-body.dark-mode #hero {
-    background: #1a2536;
-}
-
-body.dark-mode #hero h1 {
-    color: #fff;
-}
-
-body.dark-mode #hero p {
-    color: #aaa;
-}
-
-body.dark-mode .card-nucleo {
-    border-color: #333;
-    background-color: #1e1e1e;
-}
-
-/* Botão de Doação de Alto Destaque (CTA) */
-.btn-doacao {
-    background-color: #ff4757; /* Vermelho vibrante para chamar atenção */
-    color: white !important; /* Força o texto a ser branco */
-    font-weight: bold;
-    padding: 8px 18px;
-    border-radius: 20px; /* Bordas arredondadas estilo startup */
-    text-decoration: none;
-    font-size: 14px;
-    transition: background-color 0.2s, transform 0.2s;
-    border: none;
-    cursor: pointer;
-}
-
-/* Efeito ao passar o mouse */
-.btn-doacao:hover {
-    background-color: #ff2e44; /* Vermelho um pouco mais escuro */
-    transform: scale(1.05); /* Dá um leve pulo para frente */
-}
-
-/* Ajuste para o Modo Noturno não quebrar o botão de doação */
-body.dark-mode .btn-doacao {
-    background-color: #ff4757;
-    color: white;
-}
-body.dark-mode .btn-doacao:hover {
-    background-color: #ff2e44;
-}
-
-/* Classes para a seção dinâmica do JS */
 .secao-quem-somos {
     padding: 60px 20px;
     margin-top: 30px;
 }
 
 .titulo-quem-somos {
-    color: #0056b3;
+    color: var(--cor-primaria);
     font-size: 28px;
 }
 
 .subtitulo-quem-somos {
-    color: #666;
+    color: var(--cor-texto-suave);
     margin-top: 5px;
 }
 
@@ -294,15 +218,6 @@ body.dark-mode .btn-doacao:hover {
     margin-top: 15px;
 }
 
-/* Ajuste automático para o Modo Noturno */
-body.dark-mode .titulo-quem-somos {
-    color: #38ef7d; /* Verde moderno no escuro */
-}
-body.dark-mode .subtitulo-quem-somos {
-    color: #aaa;
-}
-
-/* Seção de Transparência */
 .secao-transparencia {
     padding: 60px 20px;
     background-color: #f9fbfd;
@@ -310,12 +225,7 @@ body.dark-mode .subtitulo-quem-somos {
     border-radius: 8px;
 }
 
-body.dark-mode .secao-transparencia {
-    background-color: #1e1e1e;
-}
-
-/* Container dos botões de alternância */
-.Abas-transparencia {
+.abas-transparencia {
     display: flex;
     gap: 10px;
     margin: 20px 0;
@@ -323,51 +233,87 @@ body.dark-mode .secao-transparencia {
 
 .btn-aba {
     padding: 10px 20px;
-    border: 1px solid #0056b3;
+    border: 1px solid var(--cor-primaria);
     background: transparent;
-    color: #0056b3;
+    color: var(--cor-primaria);
     cursor: pointer;
     border-radius: 4px;
     font-weight: bold;
     transition: all 0.2s;
 }
 
-/* Estado Ativo da Aba */
 .btn-aba.ativo {
-    background-color: #0056b3;
+    background-color: var(--cor-primaria);
     color: white;
 }
 
-body.dark-mode .btn-aba {
-    color: #38ef7d;
-    border-color: #38ef7d;
-}
-body.dark-mode .btn-aba.ativo {
-    background-color: #38ef7d;
-    color: #121212;
-}
-
-/* Caixa onde o conteúdo do relatório vai aparecer */
 .caixa-relatorio {
     padding: 20px;
     background: white;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-borda);
     border-radius: 6px;
     margin-top: 15px;
 }
 
-body.dark-mode .caixa-relatorio {
-    background: #2a2a2a;
-    border-color: #444;
+.secao-doacao {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f4f9ff 0%, #e6f0fa 100%);
+    margin-top: 30px;
+    border-radius: 8px;
+    text-align: center;
 }
 
-/* CLASSE DE ESTADO CRÍTICA: Esconde o elemento */
-.escondido {
-    display: none !important;
+.grid-valores {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
 }
 
+.card-valor {
+    background: white;
+    border: 2px solid var(--cor-borda);
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 150px;
+    transition: all 0.2s ease;
+}
 
-/* Seção de Contato */
+.card-valor strong {
+    font-size: 22px;
+    color: var(--cor-primaria);
+}
+
+.card-valor p {
+    font-size: 12px;
+    color: var(--cor-texto-suave);
+    margin: 5px 0 0 0;
+}
+
+.card-valor:hover,
+.card-valor.selecionado {
+    border-color: var(--cor-secundaria);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
+}
+
+.card-nota-valor {
+    border: 2px dashed #00a896 !important;
+    background-color: #f0fdfa !important;
+}
+
+.card-nota-valor strong {
+    color: #007a6e !important;
+}
+
+.bloco-outras-doacoes {
+    margin-top: 30px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
 .secao-contato {
     padding: 60px 20px;
     margin-top: 30px;
@@ -380,48 +326,40 @@ body.dark-mode .caixa-relatorio {
     margin-top: 25px;
 }
 
-/* Responsividade simples para telas menores */
-@media (max-width: 768px) {
-    .grid-contato {
-        grid-template-columns: 1fr;
-    }
-}
-
 .info-contato h3 {
-    color: #0056b3;
+    color: var(--cor-primaria);
     margin-bottom: 15px;
 }
 
-body.dark-mode .info-contato h3 {
-    color: #38ef7d;
-}
-
-/* Formulário */
+/* FORMULÁRIO COM FOCO MODERNO (GLOW EFFECT) */
 .formulario-contato {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.formulario-contato input, 
+.formulario-contato input,
 .formulario-contato textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 14px;
+    background-color: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 8px;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    transition: all 0.2s ease;
 }
 
-body.dark-mode .formulario-contato input,
-body.dark-mode .formulario-contato textarea {
-    background-color: #2a2a2a;
-    border-color: #444;
-    color: #fff;
+.formulario-contato input:focus,
+.formulario-contato textarea:focus {
+    outline: none;
+    background-color: #ffffff;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.15);
 }
 
 .btn-enviar {
-    background-color: #0056b3;
+    background-color: var(--cor-primaria);
     color: white;
     padding: 12px;
     border: none;
@@ -432,32 +370,21 @@ body.dark-mode .formulario-contato textarea {
 }
 
 .btn-enviar:hover {
-    background-color: #004085;
+    background-color: var(--cor-primaria-hover);
 }
 
-body.dark-mode .btn-enviar {
-    background-color: #38ef7d;
-    color: #121212;
-}
-body.dark-mode .btn-enviar:hover {
-    background-color: #2ed573;
-}
-
-
-/* Container das Redes Sociais */
 .redes-sociais {
     display: flex;
     gap: 15px;
     margin-top: 25px;
 }
 
-/* Estilo de cada link de rede social */
 .link-rede {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    color: #444;
+    color: #444444;
     font-weight: bold;
     font-size: 14px;
     background-color: #f0f4f8;
@@ -466,7 +393,6 @@ body.dark-mode .btn-enviar:hover {
     transition: all 0.2s ease;
 }
 
-/* Cores personalizadas no Hover */
 .link-rede.instagram:hover {
     background-color: #e1306c;
     color: white;
@@ -477,97 +403,168 @@ body.dark-mode .btn-enviar:hover {
     color: white;
 }
 
-/* Adaptação para o Modo Noturno */
-body.dark-mode .link-rede {
-    background-color: #2a2a2a;
-    color: #ccc;
-}
-body.dark-mode .link-rede.instagram:hover {
-    background-color: #e1306c;
-    color: white;
-}
-body.dark-mode .link-rede.facebook:hover {
-    background-color: #1877f2;
-    color: white;
+.rodape-institucional {
+    background: #333333;
+    color: #ffffff;
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
 }
 
-/* Seção de Doação Interativa */
-.secao-doacao {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, #f4f9ff 0%, #e6f0fa 100%);
-    margin-top: 30px;
-    border-radius: 8px;
-    text-align: center;
+.rodape-institucional p {
+    margin: 5px 0;
+}
+
+.texto-endereco {
+    font-size: 14px;
+    color: #cccccc;
+}
+
+/* ==========================================================================
+   5. ACABAMENTO DO TEMA ESCURO (DARK MODE - INVERSÃO DINÂMICA)
+   ========================================================================== */
+body.dark-mode {
+    background-color: #121212;
+    color: #f5f5f5;
+}
+
+body.dark-mode #cabecalho-fixo {
+    background-color: rgba(30, 30, 30, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .botao-menu {
+    color: #cccccc;
+}
+
+body.dark-mode .botao-menu:hover {
+    background-color: #2a2a2a;
+    color: var(--cor-sucesso);
+}
+
+body.dark-mode #hero {
+    background: #1a2536;
+}
+
+body.dark-mode #hero h1 {
+    color: #ffffff;
+}
+
+body.dark-mode #hero p {
+    color: #aaaaaa;
+}
+
+body.dark-mode .card-nucleo {
+    border-color: #333333;
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .titulo-quem-somos {
+    color: var(--cor-sucesso);
+}
+
+body.dark-mode .subtitulo-quem-somos {
+    color: #aaaaaa;
+}
+
+body.dark-mode .secao-transparencia {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .btn-aba {
+    color: var(--cor-sucesso);
+    border-color: var(--cor-sucesso);
+}
+
+body.dark-mode .btn-aba.ativo {
+    background-color: var(--cor-sucesso);
+    color: #121212;
+}
+
+body.dark-mode .caixa-relatorio {
+    background: #2a2a2a;
+    border-color: #444444;
 }
 
 body.dark-mode .secao-doacao {
     background: linear-gradient(135deg, #1e1e1e 0%, #151a21 100%);
 }
 
-/* Grid de Valores Predefinidos */
-.grid-valores {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 25px 0;
-    flex-wrap: wrap;
-}
-
-.card-valor {
-    background: white;
-    border: 2px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 150px;
-    transition: all 0.2s ease;
-}
-
-.card-valor strong {
-    font-size: 22px;
-    color: #0056b3;
-}
-
-.card-valor p {
-    font-size: 12px;
-    color: #666;
-    margin: 5px 0 0 0;
-}
-
-/* Efeito de Seleção no card de valor */
-.card-valor:hover, .card-valor.selecionado {
-    border-color: #ff4757;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
-}
-
 body.dark-mode .card-valor {
     background: #2a2a2a;
-    border-color: #444;
+    border-color: #444444;
 }
+
 body.dark-mode .card-valor strong {
-    color: #38ef7d;
+    color: var(--cor-sucesso);
 }
+
 body.dark-mode .card-valor p {
-    color: #aaa;
+    color: #aaaaaa;
 }
 
-
-/* Card de Destaque para o Sua Nota Tem Valor */
-.card-nota-valor {
-    border: 2px dashed #00a896 !important; /* Borda tracejada para diferenciar */
-    background-color: #f0fdfa !important;
-}
-
-.card-nota-valor strong {
-    color: #007a6e !important;
-}
-
-/* Ajuste do card no Modo Noturno */
 body.dark-mode .card-nota-valor {
     background-color: #142120 !important;
     border-color: #00a896 !important;
 }
+
 body.dark-mode .card-nota-valor strong {
-    color: #38ef7d !important;
+    color: var(--cor-sucesso) !important;
+}
+
+body.dark-mode .info-contato h3 {
+    color: var(--cor-sucesso);
+}
+
+body.dark-mode .formulario-contato input,
+body.dark-mode .formulario-contato textarea {
+    background-color: #2a2a2a;
+    border-color: #444444;
+    color: #ffffff;
+}
+
+body.dark-mode .formulario-contato input:focus,
+body.dark-mode .formulario-contato textarea:focus {
+    background-color: #1e1e1e;
+    border-color: var(--cor-sucesso);
+    box-shadow: 0 0 0 4px rgba(56, 239, 125, 0.15);
+}
+
+body.dark-mode .btn-enviar {
+    background-color: var(--cor-sucesso);
+    color: #121212;
+}
+
+body.dark-mode .btn-enviar:hover {
+    background-color: #2ed573;
+}
+
+body.dark-mode .link-rede {
+    background-color: #2a2a2a;
+    color: #cccccc;
+}
+
+/* ==========================================================================
+   6. RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .grid-contato {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .grid-nucleos {
+        grid-template-columns: 1fr;
+    }
+
+    #cabecalho-fixo {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .espacador-menu {
+        height: 140px;
+    }
 }

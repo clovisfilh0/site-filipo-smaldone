@@ -24,13 +24,14 @@
     <div class="espacador-menu"></div>
 
     <main class="conteudo-principal">
-        <section id="hero">
+
+        <section id="hero" class="revelar">
             <h1>Educação e Inclusão para a Comunidade Surda</h1>
             <p>Há décadas transformando vidas em Fortaleza através do ensino especializado, fonoaudiologia e assistência
                 social.</p>
         </section>
 
-        <section class="secao-nucleos" id="nucleos">
+        <section class="secao-nucleos revelar" id="nucleos">
             <h2>Nossos Serviços em Fortaleza</h2>
             <div class="grid-nucleos">
                 <div class="card-nucleo">
@@ -43,16 +44,62 @@
                 </div>
             </div>
         </section>
+
         <div id="secao-historia-container"></div>
         <div id="secao-transparencia-container"></div>
         <div id="secao-doacao-container"></div>
-        <div id="secao-contato-container"></div>
+
+        <section id="contato" class="secao-contato revelar">
+            <h2>Fale Conosco</h2>
+
+            <div class="grid-contato">
+                <div class="info-contato">
+                    <h3>📍 Unidade Fortaleza</h3>
+                    <p><strong>Endereço:</strong> Rua Desembargador Praxedes, 1420 - Montese</p>
+                    <p><strong>Telefone:</strong> (85) 3292-1420</p>
+                    <p><strong>E-mail:</strong> contato@filipposmaldone.org.br</p>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        ⏰ Horário de atendimento: Segunda a Sexta, das 07:30 às 17:00.
+                    </p>
+
+                    <div class="redes-sociais">
+                        <a href="https://www.instagram.com/filipposmaldonefortaleza/" target="_blank"
+                            class="link-rede instagram">
+                            📸 Instagram
+                        </a>
+                        <a href="https://www.facebook.com/filipposmaldonefortaleza" target="_blank"
+                            class="link-rede facebook">
+                            👥 Facebook
+                        </a>
+                    </div>
+                </div>
+
+                <div class="formulario-container">
+                    <form id="formulario-contato" class="formulario-contato">
+                        <input type="text" id="nome-contato" placeholder="Seu Nome Completo" required>
+                        <input type="email" id="email-contato" placeholder="Seu Melhor E-mail" required>
+                        <textarea id="mensagem-contato" placeholder="Como você deseja ajudar ou qual sua dúvida?"
+                            rows="4" required></textarea>
+                        <button type="submit" class="btn-enviar">✉️ Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="rodape-institucional">
         <p><strong>Instituto Filippo Smaldone - Fortaleza</strong></p>
-        <p class="texto-endereco">Rua Adolfo Siqueira, 273 - Joaquim Távora</p>
+        <p class="texto-endereco">Rua Desembargador Praxedes, 1420 - Montese</p>
     </footer>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div vw-plugin-top-wrapper></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 
     <script src="app.js"></script>
 </body>
