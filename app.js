@@ -9,6 +9,7 @@ let modoNoturnoAtivo = false;
 
 const botoesMenu = [
     { texto: "Home", link: "#hero" },
+    { texto: "Serviços", link: "#nucleos" },
     { texto: "Nossa História", link: "#quem-somos" },
     { texto: "Transparência", link: "#transparencia" },
     { texto: "Contato", link: "#contato" }
@@ -90,7 +91,7 @@ const criarSecaoHistoria = () => {
 
     const secaoElemento = document.createElement('section');
     secaoElemento.id = 'quem-somos';
-    secaoElemento.classList.add('secao-quem-somos', 'revelar'); // Adicionado o revelar!
+    secaoElemento.classList.add('secao-quem-somos', 'revelar');
 
     const tituloElemento = document.createElement('h2');
     tituloElemento.innerText = dadosHistoria.titulo;
@@ -113,63 +114,73 @@ const criarSecaoHistoria = () => {
 // ==========================================
 // 4. SEÇÃO DE TRANSPARÊNCIA INTERATIVA (ESTADOS)
 // ==========================================
-const criarSecaoTransparencia = () => {
-    const container = document.querySelector('#secao-transparencia-container');
-    if (!container) return;
-
-    const secao = document.createElement('section');
-    secao.id = 'transparencia';
-    secao.classList.add('secao-transparencia', 'revelar'); // Adicionado o revelar!
-
-    const titulo = document.createElement('h2');
-    titulo.innerText = "Transparência Financeira";
-    secao.appendChild(titulo);
-
-    const sub = document.createElement('p');
-    sub.innerText = "Clique nas abas abaixo para ver como os recursos são aplicados no Instituto em Fortaleza.";
-    secao.appendChild(sub);
-
-    const containerAbas = document.createElement('div');
-    containerAbas.classList.add('abas-transparencia');
-
-    const btnEscola = document.createElement('button');
-    btnEscola.innerText = "📊 Investimento Escola";
-    btnEscola.classList.add('btn-aba', 'ativo');
-
-    const btnClinica = document.createElement('button');
-    btnClinica.innerText = "📊 Investimento Clínica";
-    btnClinica.classList.add('btn-aba');
-
-    containerAbas.appendChild(btnEscola);
-    containerAbas.appendChild(btnClinica);
-    secao.appendChild(containerAbas);
-
-    const relatorioEscola = document.createElement('div');
-    relatorioEscola.classList.add('caixa-relatorio');
-    relatorioEscola.innerHTML = "<strong>Setor Pedagógico:</strong> 70% em alimentação especializada e materiais adaptados de Libras, 30% em manutenção das salas de aula.";
-
-    const relatorioClinica = document.createElement('div');
-    relatorioClinica.classList.add('caixa-relatorio', 'escondido');
-    relatorioClinica.innerHTML = "<strong>Setor de Saúde:</strong> 60% em equipamentos de fonoaudiologia de última geração, 40% em exames e diagnósticos gratuitos para a comunidade.";
-
-    secao.appendChild(relatorioEscola);
-    secao.appendChild(relatorioClinica);
-    container.appendChild(secao);
-
-    btnEscola.addEventListener('click', () => {
-        btnEscola.classList.add('ativo');
-        btnClinica.classList.remove('ativo');
-        relatorioEscola.classList.remove('escondido');
-        relatorioClinica.classList.add('escondido');
-    });
-
-    btnClinica.addEventListener('click', () => {
-        btnClinica.classList.add('ativo');
-        btnEscola.classList.remove('ativo');
-        relatorioClinica.classList.remove('escondido');
-        relatorioEscola.classList.add('escondido');
-    });
+const dadosTransparencia = {
+    assistencia: {
+        titulo: "Eixo: Assistência Social",
+        descricao: "Documentações, relatórios e prestações de contas das ações de amparo social no Joaquim Távora.",
+        projetos: [
+            { nome: "Cestas Básicas e Segurança Alimentar", arquivo: "docs/prestacao_cestas_2026.pdf" },
+            { nome: "Acolhimento e Orientação Familiar", arquivo: "docs/relatorio_acolhimento_2026.pdf" },
+            { nome: "Campanhas e Ações Comunitárias", arquivo: "docs/balanco_acoes_comunidade.pdf" }
+        ]
+    },
+    educacao: {
+        titulo: "Eixo: Educação",
+        descricao: "Prestações de contas e relatórios de investimentos na manutenção da Escola Especializada.",
+        projetos: [
+            { nome: "Manutenção da Educação Infantil (Libras)", arquivo: "docs/contas_educacao_infantil.pdf" },
+            { nome: "Materiais Didáticos e Alfabetização Bilíngue", arquivo: "docs/investimento_materiais_2026.pdf" },
+            { nome: "Oficinas e Atividades do Tempo Integral", arquivo: "docs/prestacao_tempo_integral.pdf" }
+        ]
+    },
+    saude: {
+        titulo: "Eixo: Saúde",
+        descricao: "Relatórios de repasses e aplicações nos atendimentos de fonoaudiologia e psicopedagogia.",
+        projetos: [
+            { nome: "Atendimentos de Fonoaudiologia Educacional", arquivo: "docs/prestacao_fonoaudiologia.pdf" },
+            { nome: "Avaliações e Suporte Psicopedagógico", arquivo: "docs/relatorio_psicopedagogia.pdf" },
+            { nome: "Clínica de Estimulação Precoce da Linguagem", arquivo: "docs/balanco_estimulacao_linguagem.pdf" }
+        ]
+    }
 };
+
+function renderizarProjetosEixo(eixoChave) {
+    const container = document.querySelector('#projetos-eixo-container');
+    if (!container) return; // Segurança extra contra travamentos do DOM
+
+    const dados = dadosTransparencia[eixoChave];
+
+    container.innerHTML = `
+        <div class="conteudo-eixo-card animar-entrada">
+            <h3>${dados.titulo}</h3>
+            <p class="descricao-eixo">${dados.descricao}</p>
+            
+            <div class="grid-projetos-arquivos">
+                ${dados.projetos.map(proj => `
+                    <div class="card-projeto-documento">
+                        <div class="icone-documento">📄</div>
+                        <h4>${proj.nome}</h4>
+                        <a href="${proj.arquivo}" target="_blank" class="btn-baixar-pdf">
+                            👁️ Ver Prestação de Contas
+                        </a>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function inicializarAbasTransparencia() {
+    const botoes = document.querySelectorAll('.btn-aba');
+    botoes.forEach(botao => {
+        botao.addEventListener('click', () => {
+            botoes.forEach(b => b.classList.remove('ativo'));
+            botao.classList.add('ativo');
+            const eixoSelecionado = botao.getAttribute('data-eixo');
+            renderizarProjetosEixo(eixoSelecionado);
+        });
+    });
+}
 
 // ==========================================
 // 5. ESCUTA E VALIDAÇÃO DO FORMULÁRIO DE CONTATO (HTML FIXO)
@@ -203,7 +214,7 @@ const criarSecaoDoacaoOpcoes = () => {
 
     const secao = document.createElement('section');
     secao.id = 'doacoes';
-    secao.classList.add('secao-doacao', 'revelar'); // Adicionado o revelar!
+    secao.classList.add('secao-doacao', 'revelar');
 
     const titulo = document.createElement('h2');
     titulo.innerText = "Transforme Vidas Conosco";
@@ -238,7 +249,7 @@ const criarSecaoDoacaoOpcoes = () => {
             card.classList.add('selecionado');
 
             if (tipo === 'parceria') {
-                alert(`📋 Programa Sua Nota Tem Valor (Governo do Ceará)\n\nPara nos ajudar:\n1. Baixe o aplicativo do programa no seu celular.\n2. Escolha o "Instituto Filippo Smaldone" como sua instituição beneficiária.\n3. Peça CPF na nota em todas as suas compras em Fortaleza!\n\nO Estado converte seus pontos em repasses financeiros para a nossa escola.`);
+                alert(`📋 Programa Sua Nota Tem Valor (Governo do Ceará)\n\nPara nos ajudar:\n1. Baixe o aplicativo do program no seu celular.\n2. Escolha o "Instituto Filippo Smaldone" como sua instituição beneficiária.\n3. Peça CPF na nota em todas as suas compras!\n\nO Estado converte seus pontos em repasses financeiros para a nossa escola no Joaquim Távora.`);
             } else {
                 alert(`Você escolheu apoiar com ${quantia} (${impacto}).\n\nChave PIX CNPJ para transferência: cnpj@filipposmaldone.org.br`);
             }
@@ -247,15 +258,6 @@ const criarSecaoDoacaoOpcoes = () => {
         gridValores.appendChild(card);
     });
     secao.appendChild(gridValores);
-
-    const outrasFormas = document.createElement('div');
-    outrasFormas.classList.add('bloco-outras-doacoes');
-    outrasFormas.innerHTML = `
-        <p><strong>💳 Outras Formas de Doar:</strong></p>
-        <p><strong>Cartão de Crédito (Mensal):</strong> Solicite nosso link recorrente via formulário de contato.</p>
-        <p><strong>Doação de Materiais:</strong> Recebemos roupas para bazar, alimentos e brinquedos direto na nossa sede no Montese.</p>
-    `;
-    secao.appendChild(outrasFormas);
 
     container.appendChild(secao);
 };
@@ -278,7 +280,7 @@ const escutarScrollParaRevelar = () => {
     };
 
     window.addEventListener('scroll', checarElementos);
-    checarElementos(); // Dispara uma vez na inicialização
+    checarElementos();
 };
 
 // ==========================================
@@ -287,7 +289,11 @@ const escutarScrollParaRevelar = () => {
 const inicializarSistemas = () => {
     renderizarMenuCompleto();
     criarSecaoHistoria();
-    criarSecaoTransparencia();
+    
+    // Unificação Correta da Transparência de Documentos no Ciclo de Vida do DOM
+    renderizarProjetosEixo('assistencia');
+    inicializarAbasTransparencia();
+    
     inicializarFormularioContato();
     criarSecaoDoacaoOpcoes();
 
@@ -300,4 +306,5 @@ const inicializarSistemas = () => {
     }
 };
 
+// Dispara os sistemas de forma segura
 inicializarSistemas();
