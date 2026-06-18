@@ -10,7 +10,7 @@ let modoNoturnoAtivo = false;
 const botoesMenu = [
     { texto: "Home", link: "#hero" },
     { texto: "Serviços", link: "#nucleos" },
-    { texto: "Nossa História", link: "#quem-somos" },
+    { texto: "História", link: "#quem-somos" },
     { texto: "Transparência", link: "#transparencia" },
     { texto: "Contato", link: "#contato" }
 ];
@@ -199,8 +199,24 @@ const inicializarFormularioContato = () => {
         if (nome === '' || email === '' || mensagem === '') {
             alert('⚠️ Por favor, preencha todos os campos do formulário antes de enviar.');
         } else {
-            alert(`Obrigado, ${nome}! Sua mensagem foi enviada com sucesso para a equipe do Instituto.`);
-            form.reset();
+            const botaoEnviar = form.querySelector('.btn-enviar');
+            const textoOriginal = botaoEnviar.innerText;
+
+            // Desabilita o botão para evitar cliques duplicados
+            botaoEnviar.disabled = true;
+            botaoEnviar.innerText = "⏳ Enviando mensagem...";
+            botaoEnviar.style.opacity = "0.7";
+
+            // Simula o tempo de resposta do servidor (1.5 segundos) antes de dar o sucesso
+            setTimeout(() => {
+                alert(`Obrigado, ${nome}! Sua mensagem foi enviada com sucesso para a equipe do Instituto.`);
+                form.reset();
+
+                // Restaura o botão ao estado original
+                botaoEnviar.disabled = false;
+                botaoEnviar.innerText = textoOriginal;
+                botaoEnviar.style.opacity = "1";
+            }, 1500);
         }
     });
 };
@@ -289,11 +305,11 @@ const escutarScrollParaRevelar = () => {
 const inicializarSistemas = () => {
     renderizarMenuCompleto();
     criarSecaoHistoria();
-    
+
     // Unificação Correta da Transparência de Documentos no Ciclo de Vida do DOM
     renderizarProjetosEixo('assistencia');
     inicializarAbasTransparencia();
-    
+
     inicializarFormularioContato();
     criarSecaoDoacaoOpcoes();
 
