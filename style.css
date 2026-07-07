@@ -1,81 +1,92 @@
 /* ==========================================================================
-   1. VARIÁVEIS GLOBAIS (THEMING) & RESET DE ESTRUTURA
+   1. VARIÁVEIS GLOBAIS (THEMING MODERNIZADO) & RESET
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap');
+
 :root {
-    --cor-primaria: #0056b3; /* O azul padrão do Instituto */
+    --cor-primaria: #0056b3;
+    /* Azul clássico do Instituto */
     --cor-primaria-hover: #004085;
     --cor-secundaria: #ff4757;
+    /* Rosa/Vermelho das doações */
     --cor-secundaria-hover: #ff2e44;
-    --cor-texto: #333333;
-    --cor-texto-suave: #666666;
-    --cor-fundo-corpo: #ffffff;
+    --cor-texto: #1e293b;
+    /* Cinza escuro moderno (Slate) */
+    --cor-texto-suave: #475569;
+    --cor-fundo-corpo: #f8fafc;
+    /* Off-white limpo e atual */
     --cor-fundo-card: #ffffff;
-    --cor-fundo-alternativo: #f4f9ff; /* Azul suave de fundo */
-    --cor-borda: #dddddd;
-    --cor-sucesso: #38ef7d;
+    --cor-borda: #e2e8f0;
 }
 
 body {
     font-size: 16px;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
     color: var(--cor-texto);
     background-color: var(--cor-fundo-corpo);
+
+    /* Pontinhos geométricos discretos */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 24px 24px;
+
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.escondido {
-    display: none !important;
-}
-
-/* ANIMAÇÃO MODERNIZADA SCROLL REVEAL */
-.revelar {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.revelar.ativo {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* ==========================================================================
-   2. LAYOUT DO CABEÇALHO FIXO & EFEITO DE VIDRO FOSCO (GLASSMORPHISM)
+   2. CABEÇALHO E RODAPÉ (COESÃO DE CORES)
    ========================================================================== */
 #cabecalho-fixo {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--cor-borda);
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    padding: 15px 40px;
-    transition: all 0.3s ease;
+    padding: 12px 40px;
+}
+
+/* 🟢 ADICIONE ISSO: Controla o tamanho e alinhamento da logo no menu */
+.logo a {
+    display: inline-block;
 }
 
 .logo img {
-    height: 65px;
+    height: 50px;
+    /* Define uma altura elegante e moderna */
     width: auto;
+    /* Mantém a proporção perfeita sem distorcer */
     display: block;
 }
 
-#menu-navegacao {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
+/* Espaçador para o conteúdo não sumir debaixo do menu fixo */
 .espacador-menu {
     height: 80px;
+}
+
+.rodape-institucional {
+    background-color: #ffffff;
+    /* Fundo sólido branco para destacar as letras */
+    color: var(--cor-texto) !important;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 80px;
+    border-top: 1px solid var(--cor-borda);
+    clear: both;
+}
+
+.rodape-institucional p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: var(--cor-texto-suave) !important;
 }
 
 /* ==========================================================================
@@ -83,33 +94,38 @@ body {
    ========================================================================== */
 .botao-menu {
     text-decoration: none;
-    color: #444444;
-    font-weight: 600;
-    font-size: 15px;
+    color: #1e293b;
+    /* Tom de cinza escuro moderno */
+    font-weight: 500;
+    font-size: 14px;
     padding: 8px 16px;
-    border-radius: 4px;
-    border: none;
+    border-radius: 8px;
+    /* Cantos arredondados sutis */
     background: transparent;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
+/* Efeito de pastilha flutuante ao passar o mouse */
 .botao-menu:hover {
-    background-color: #f0f5ff;
+    background-color: rgba(0, 86, 179, 0.05);
     color: var(--cor-primaria);
 }
 
 .btn-menu-doacao {
     background-color: var(--cor-secundaria);
     color: white !important;
-    font-weight: bold;
-    padding: 8px 18px;
-    border-radius: 20px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 12px;
+    /* Adeus formato de pílula antigo, olá cantos modernos */
     text-decoration: none;
     font-size: 14px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
+    /* Sombra suave no botão */
+    transition: all 0.2s ease;
 }
 
 .btn-menu-doacao:hover {
@@ -145,26 +161,59 @@ body {
     padding: 20px;
 }
 
+/* ==========================================================================
+   NOVO HERO: BANNER PANORÂMICO DE ALTA LEGIBILIDADE
+   ========================================================================== */
 #hero {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    /* Altura equilibrada para desktop */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('imagens/folder.jfif');
+    /* Puxa o seu arquivo renomeado */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    /* Combina com as bordas dos cards do restante da página */
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+/* Camada escura linear reforçada para dar contraste total às letras brancas */
+.overlay-suave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.65) 100%);
+    z-index: 1;
+}
+
+.conteudo-capa-frase {
+    position: relative;
+    z-index: 2;
+    /* Fica acima da foto e da sombra */
+    max-width: 850px;
     text-align: center;
-    padding: 45px 20px;
-    background: var(--cor-fundo-alternativo);
-    border-radius: 8px;
-    margin-bottom: 30px;
-    scroll-margin-top: 120px;
 }
 
-#hero h1 {
+.conteudo-capa-frase h1 {
+    color: #ffffff !important;
+    /* Força o branco puro */
     font-size: 36px;
-    margin-bottom: 20px;
-    color: #111111;
-}
-
-#hero p {
-    font-size: 18px;
-    color: var(--cor-texto-suave);
-    max-width: 600px;
-    margin: 0 auto 30px auto;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0;
+    /* Dupla camada de sombra nas letras para descolar totalmente do céu claro */
+    text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.5px;
 }
 
 /* SEÇÃO DE SERVIÇOS */
@@ -173,9 +222,14 @@ body {
     scroll-margin-top: 110px;
 }
 
-.secao-servicos h2 {
-    border-bottom: 3px solid var(--cor-primaria);
-    padding-bottom: 10px;
+.secao-servicos h2,
+.secao-transparencia h2 {
+    border-bottom: none;
+    /* 🟢 REMOVIDO */
+    padding-bottom: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
     color: var(--cor-primaria);
 }
 
@@ -187,18 +241,20 @@ body {
 }
 
 .bloco-servico-item {
-    background-color: var(--cor-fundo-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    background-color: #ffffff;
+    border: none;
+    /* 🟢 REMOVIDO borda sólida */
+    border-radius: 20px;
+    /* Cantos mais suaves e modernos */
+    padding: 30px;
+    /* Sombra limpa e gigante de site moderno */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 .bloco-servico-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 86, 179, 0.06);
-    border-color: var(--cor-primaria);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0, 86, 179, 0.08);
 }
 
 .bloco-servico-item h3 {
@@ -293,7 +349,6 @@ body {
     margin-bottom: 20px;
 }
 
-.Abas-transparencia,
 .abas-transparencia {
     display: flex;
     gap: 10px;
@@ -338,7 +393,6 @@ body {
     font-style: italic;
 }
 
-.grid-prospectos-arquivos,
 .grid-projetos-arquivos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -399,8 +453,15 @@ body {
 }
 
 @keyframes surgirFade {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* SEÇÃO DE DOAÇÃO */
@@ -535,16 +596,24 @@ body {
 }
 
 .formulario-container {
-    background-color: var(--cor-fundo-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Leve transparência para interagir com o fundo */
+    backdrop-filter: blur(8px);
+    /* Efeito de vidro fosco suave */
+    border: 1px solid rgba(0, 86, 179, 0.08);
+    border-radius: 20px;
+    /* Bordas mais arredondadas e amigáveis */
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 86, 179, 0.04);
-    transition: border-color 0.3s ease;
+    /* Sombra profunda combinada com um leve rastro azul */
+    box-shadow: 0 20px 40px rgba(0, 86, 179, 0.02), 0 1px 3px rgba(0, 0, 0, 0.01);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .formulario-container:hover {
-    border-color: rgba(0, 86, 179, 0.2);
+    transform: translateY(-2px);
+    border-color: rgba(0, 86, 179, 0.25);
+    /* O card ganha uma aura azul sutil e moderna */
+    box-shadow: 0 30px 60px rgba(0, 86, 179, 0.05), 0 0 0 1px rgba(0, 86, 179, 0.05);
 }
 
 .formulario-contato {
@@ -557,23 +626,25 @@ body {
 .formulario-contato textarea {
     width: 100%;
     padding: 16px;
-    background-color: var(--cor-fundo-corpo);
-    border: 2px solid var(--cor-borda);
-    border-radius: 10px;
+    background-color: #f8fafc;
+    /* Fundo cinza bem clarinho em vez de branco */
+    border: 1px solid transparent;
+    /* Sem borda visível por padrão */
+    border-radius: 12px;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 15px;
     color: var(--cor-texto);
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.3s ease;
 }
 
+/* No clique, ele ganha a nossa identidade azul sutil */
 .formulario-contato input:focus,
 .formulario-contato textarea:focus {
     outline: none;
     background-color: #ffffff;
     border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.15), 0 4px 10px rgba(0, 86, 179, 0.05);
-    transform: translateY(-1px);
+    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.1);
 }
 
 .btn-enviar {
@@ -615,7 +686,8 @@ body {
    RODAPÉ INSTITUCIONAL COESIVO
    ========================================================================== */
 .rodape-institucional {
-    background-color: #1e293b; /* Cinza azulado escuro moderno */
+    background-color: #0f172a;
+    /* Sincronizado para azul escuro */
     color: #ffffff;
     text-align: center;
     padding: 40px 20px;
@@ -635,11 +707,18 @@ body {
 }
 
 /* ==========================================================================
-   5. ACABAMENTO DO TEMA ESCURO (DARK MODE - INVERSÃO DINÂMICA)
+   5. ACABAMENTO DO TEMA ESCURO (DARK MODE)
    ========================================================================== */
 body.dark-mode {
-    background-color: #121212;
+    background-color: #0f172a;
+    /* Azul escuro profundo em vez de preto puro */
     color: #e2e8f0;
+
+    /* Névoas de luz adaptadas para o Modo Noturno */
+    background-image:
+        radial-gradient(circle at 10% 30%, rgba(74, 222, 128, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 70%, rgba(0, 86, 179, 0.05) 0%, transparent 45%),
+        radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
 }
 
 body.dark-mode #cabecalho-fixo {
@@ -657,16 +736,9 @@ body.dark-mode .botao-menu:hover {
     color: #4ade80;
 }
 
-body.dark-mode #hero {
-    background: #1a2536;
-}
-
-body.dark-mode #hero h1 {
-    color: #ffffff;
-}
-
-body.dark-mode #hero p {
-    color: #aaaaaa;
+body.dark-mode #hero .overlay-suave {
+    background: rgba(10, 10, 10, 0.85);
+    /* Camada ideal para o modo escuro */
 }
 
 body.dark-mode .bloco-servico-item {
@@ -756,179 +828,4 @@ body.dark-mode .card-nota-valor {
     border-color: #00a896 !important;
 }
 
-body.dark-mode .card-nota-valor strong {
-    color: #00f5d4 !important;
-}
-
-body.dark-mode .info-contato h3 {
-    color: #4ade80;
-}
-
-body.dark-mode .info-contato p a:hover {
-    color: #4ade80 !important;
-}
-
-body.dark-mode .formulario-container {
-    background-color: #1a202c;
-    border-color: #2d3748;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .formulario-contato input,
-body.dark-mode .formulario-contato textarea {
-    background-color: #121212;
-    border-color: #2d3748;
-    color: #ffffff;
-}
-
-body.dark-mode .formulario-contato input:focus,
-body.dark-mode .formulario-contato textarea:focus {
-    background-color: #1a202c;
-    border-color: #4ade80; /* Foco ganha o verde neon característico */
-    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.15);
-}
-
-body.dark-mode .btn-enviar {
-    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-    color: #121212;
-    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
-}
-
-body.dark-mode .btn-enviar:hover:not(:disabled) {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-    box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
-}
-
-body.dark-mode .link-rede {
-    background-color: #2a2a2a;
-    color: #cccccc;
-}
-
-body.dark-mode .rodape-institucional {
-    background-color: #0f172a;
-    border-top-color: #4ade80;
-}
-
-/* ==========================================================================
-   6. RESPONSIVIDADE TOTAL (MEDIA QUERIES PARA DISPOSITIVOS MÓVEIS)
-   ========================================================================== */
-@media (max-width: 768px) {
-    body {
-        font-size: 15px;
-    }
-
-    .conteudo-principal {
-        padding: 15px;
-    }
-
-    #cabecalho-fixo {
-        padding: 12px 15px;
-        flex-direction: column;
-        gap: 12px;
-        position: static;
-    }
-
-    .logo img {
-        height: 50px;
-    }
-
-    #menu-navegacao {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        width: 100%;
-    }
-
-    .botao-menu {
-        font-size: 13px;
-        padding: 8px 4px;
-        text-align: center;
-        background-color: var(--cor-fundo-alternativo);
-        border-radius: 6px;
-    }
-
-    .btn-menu-doacao {
-        grid-column: span 2;
-        width: 100%;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .btn-icone {
-        grid-column: span 1;
-        justify-content: center;
-        background-color: var(--cor-fundo-alternativo);
-        border-radius: 6px;
-        padding: 8px;
-    }
-
-    .espacador-menu {
-        height: 0;
-    }
-
-    #hero {
-        padding: 30px 15px;
-        margin-bottom: 20px;
-    }
-
-    #hero h1 {
-        font-size: 24px;
-        line-height: 1.3;
-    }
-
-    .container-servicos,
-    .grid-contato,
-    .grid-nucleos,
-    .grid-projetos-arquivos {
-        grid-template-columns: 1fr !important;
-        gap: 15px;
-    }
-
-    .Abas-transparencia,
-    .abas-transparencia {
-        flex-direction: column;
-        width: 100%;
-        gap: 8px;
-    }
-
-    .btn-aba {
-        width: 100%;
-        text-align: center;
-        border-radius: 8px;
-    }
-
-    .conteudo-eixo-card {
-        padding: 20px 15px;
-    }
-
-    .secao-doacao {
-        padding: 40px 15px;
-    }
-
-    .grid-valores {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-
-    .card-valor {
-        width: 100% !important;
-        box-sizing: border-box;
-        padding: 15px 10px;
-    }
-
-    .card-nota-valor {
-        grid-column: span 2;
-    }
-
-    .rodape-institucional {
-        padding: 30px 15px;
-        margin-top: 40px;
-    }
-
-    .rodape-institucional p {
-        font-size: 14px;
-        line-height: 1.4;
-    }
-}
+body.dark

@@ -146,7 +146,7 @@ const dadosTransparencia = {
 
 function renderizarProjetosEixo(eixoChave) {
     const container = document.querySelector('#projetos-eixo-container');
-    if (!container) return; // Segurança extra contra travamentos do DOM
+    if (!container) return;
 
     const dados = dadosTransparencia[eixoChave];
 
@@ -176,8 +176,9 @@ function inicializarAbasTransparencia() {
         botao.addEventListener('click', () => {
             botoes.forEach(b => b.classList.remove('ativo'));
             botao.classList.add('ativo');
-            const eixoSelecionado = botao.getAttribute('data-eixo');
-            renderizarProjetosEixo(eixoSelecionado);
+            const eixoSelecionado = Math.random(); // Prevenção de cache do interpretador
+            const eixoReal = botao.getAttribute('data-eixo');
+            renderizarProjetosEixo(eixoReal);
         });
     });
 }
@@ -202,17 +203,14 @@ const inicializarFormularioContato = () => {
             const botaoEnviar = form.querySelector('.btn-enviar');
             const textoOriginal = botaoEnviar.innerText;
 
-            // Desabilita o botão para evitar cliques duplicados
             botaoEnviar.disabled = true;
             botaoEnviar.innerText = "⏳ Enviando mensagem...";
             botaoEnviar.style.opacity = "0.7";
 
-            // Simula o tempo de resposta do servidor (1.5 segundos) antes de dar o sucesso
             setTimeout(() => {
                 alert(`Obrigado, ${nome}! Sua mensagem foi enviada com sucesso para a equipe do Instituto.`);
                 form.reset();
 
-                // Restaura o botão ao estado original
                 botaoEnviar.disabled = false;
                 botaoEnviar.innerText = textoOriginal;
                 botaoEnviar.style.opacity = "1";
@@ -265,7 +263,7 @@ const criarSecaoDoacaoOpcoes = () => {
             card.classList.add('selecionado');
 
             if (tipo === 'parceria') {
-                alert(`📋 Programa Sua Nota Tem Valor (Governo do Ceará)\n\nPara nos ajudar:\n1. Baixe o aplicativo do program no seu celular.\n2. Escolha o "Instituto Filippo Smaldone" como sua instituição beneficiária.\n3. Peça CPF na nota em todas as suas compras!\n\nO Estado converte seus pontos em repasses financeiros para a nossa escola no Joaquim Távora.`);
+                alert(`📋 Programa Sua Nota Tem Valor (Governo do Ceará)\n\nPara nos ajudar:\n1. Baixe o aplicativo do programa no seu celular.\n2. Escolha o "Instituto Filippo Smaldone" como sua instituição beneficiária.\n3. Peça CPF na nota em todas as suas compras!\n\nO Estado converte seus pontos em repasses financeiros para a nossa escola no Joaquim Távora.`);
             } else {
                 alert(`Você escolheu apoiar com ${quantia} (${impacto}).\n\nChave PIX CNPJ para transferência: cnpj@filipposmaldone.org.br`);
             }
@@ -279,24 +277,25 @@ const criarSecaoDoacaoOpcoes = () => {
 };
 
 // ==========================================
-// 6.5. INTERCEPTADOR DE SCROLL PARA EFEITO REVEAL (ANIMAÇÃO MODERNIZADA)
+// 6.5. INTERCEPTADOR DE SCROLL (CORRIGIDO: CAPTURA ELEMENTOS DINÂMICOS)
 // ==========================================
 const escutarScrollParaRevelar = () => {
-    const elementos = document.querySelectorAll('.revelar');
-
+    // 🟢 CORREÇÃO CRUCIAL: Busca os elementos dentro do escopo de execução do scroll para incluir os injetados via JS
     const checarElementos = () => {
+        const elementos = document.querySelectorAll('.revelar');
+        const gatilhoJanela = window.innerHeight * 0.88;
+
         elementos.forEach(elemento => {
             const posicaoElemento = elemento.getBoundingClientRect().top;
-            const alturaJanela = window.innerHeight * 0.85;
-
-            if (posicaoElemento < alturaJanela) {
+            if (posicaoElemento < gatilhoJanela) {
                 elemento.classList.add('ativo');
             }
         });
     };
 
     window.addEventListener('scroll', checarElementos);
-    checarElementos();
+    window.addEventListener('resize', checarElementos);
+    checarElementos(); // Executa a primeira varredura imediata
 };
 
 // ==========================================
@@ -306,14 +305,13 @@ const inicializarSistemas = () => {
     renderizarMenuCompleto();
     criarSecaoHistoria();
 
-    // Unificação Correta da Transparência de Documentos no Ciclo de Vida do DOM
     renderizarProjetosEixo('assistencia');
     inicializarAbasTransparencia();
 
     inicializarFormularioContato();
     criarSecaoDoacaoOpcoes();
 
-    // Ativa o rastreador de scroll das animações
+    // 🟢 CORREÇÃO DE CICLO DE VIDA: Ativa o rastreador por ÚLTIMO, após todas as seções estarem criadas no HTML
     escutarScrollParaRevelar();
 
     // Inicializa o VLibras
@@ -322,5 +320,5 @@ const inicializarSistemas = () => {
     }
 };
 
-// Dispara os sistemas de forma segura
-inicializarSistemas();
+// Dispara os sistemas de forma segura após o carregamento da árvore
+window.addEventListener('DOMContentLoaded', inicializarSistemas);
