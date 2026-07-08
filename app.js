@@ -91,12 +91,12 @@ const criarSecaoHistoria = () => {
 
     const secaoElemento = document.createElement('section');
     secaoElemento.id = 'quem-somos';
-    secaoElemento.classList.add('secao-quem-somos', 'revelar');
+    secaoElemento.classList.add('secao-quem-somos');
 
     const tituloElemento = document.createElement('h2');
     tituloElemento.innerText = dadosHistoria.titulo;
-    tituloElemento.classList.add('titulo-quem-somos');
 
+    // Mudamos para h4 para casar certinho com o CSS dos subtítulos
     const subtituloElemento = document.createElement('h4');
     subtituloElemento.innerText = dadosHistoria.subtitulo;
     subtituloElemento.classList.add('subtitulo-quem-somos');
